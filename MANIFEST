@@ -24,6 +24,7 @@ LibYAML/emitter.c
 LibYAML/lib/YAML/XS/LibYAML.pm
 LibYAML/LibYAML.xs
 LibYAML/loader.c
+LibYAML/Makefile
 LibYAML/Makefile.PL
 LibYAML/parser.c
 LibYAML/perl_libyaml.c
