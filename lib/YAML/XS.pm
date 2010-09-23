@@ -1,31 +1,7 @@
-# ToDo:
-#
-# - Load globs
-# - Dump *foo{IO} and *foo{FORMAT}
-# - Rewrite documentation
-# - Copy all relevant code from YAML::Syck
-#   - Review YAML::Syck Changes file
-# - Make YAML a prereq for YAML-LibYAML
-# - Make loading regexp use code from YAML::Types
-# - Make glob dumping use YAML::Node
-# - Move all YAML and YAML::XS tests to YAML::Tests
-#   - Make YAML and YAML::XS pass all common tests
-# - Add scalar dumping heuristics similar to YAML.pm
-#
-# Tests:
-# - Abstract all tests to YAML::Tests
-# - http://svn.ali.as/cpan/concept/cpan-yaml-tiny/
-#
-# Profiling:
-# - TonyC: sprof if I can remember the way to enable shared library profiling
-# - TonyC: LD_PROFILE, but that may not work on OS X
-# - TonyC: sample or Sampler.app on OS X, I'd guess
-
-
 package YAML::XS;
 use 5.008003;
 use strict;
-$YAML::XS::VERSION = '0.33';
+$YAML::XS::VERSION = '0.34';
 use base 'Exporter';
 
 @YAML::XS::EXPORT = qw(Load Dump);
@@ -36,6 +12,8 @@ use base 'Exporter';
 # $YAML::XS::UseCode = 0;
 # $YAML::XS::DumpCode = 0;
 # $YAML::XS::LoadCode = 0;
+
+$YAML::XS::QuoteNumericStrings = 1;
 
 use YAML::XS::LibYAML qw(Load Dump);
 
@@ -172,8 +150,43 @@ originally bound to Python and was later bound to Ruby.
 This module is a Perl XS binding to libyaml which offers Perl the best YAML
 support to date.
 
-This module exports the functions C<Dump> and C<Load>. These functions
-are intended to work exactly like C<YAML.pm>'s corresponding functions.
+This module exports the functions C<Dump>, C<Load>, C<DumpFile> and
+C<LoadFile>. These functions are intended to work exactly like C<YAML.pm>'s
+corresponding functions.
+
+=head1 CONFIGURATION
+
+=over 4
+
+=item C<$YAML::XS::UseCode>
+
+=item C<$YAML::XS::DumpCode>
+
+=item C<$YAML::XS::LoadCode>
+
+If enabled supports deparsing and evaling of code blocks.
+
+=item C<$YAML::XS::QuoteNumericStrings>
+
+When true (the default) strings that look like numbers but have not been
+numified will be quoted when dumping.
+
+This ensures leading that things like leading zeros and other formatting
+are preserved.
+
+=back
+
+=head1 USING YAML::XS WITH UNICODE
+
+Handling unicode properly in Perl can be a pain. YAML::XS only deals
+with streams of utf8 octets. Just remember this:
+
+    $perl = Load($utf8_octets);
+    $utf8_octets = Dump($perl);
+
+There are many, many places where things can go wrong with unicode.
+If you are having problems, use Devel::Peek on all the possible
+data points.
 
 =head1 SEE ALSO
 
@@ -185,15 +198,9 @@ are intended to work exactly like C<YAML.pm>'s corresponding functions.
 
 Ingy döt Net <ingy@cpan.org>
 
-=head1 MAINTAINERS
-
-Yuval Kogman <nothingmuch@woobling.org>
-
-Gisle Aas <gisle@ActiveState.com>
-
 =head1 COPYRIGHT
 
-Copyright (c) 2007, 2008, 2009, 2010. Ingy döt Net.
+Copyright (c) 2007, 2008, 2010. Ingy döt Net.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

@@ -1,12 +1,16 @@
 Changes
 inc/Module/Install.pm
+inc/Module/Install/AckXXX.pm
 inc/Module/Install/Base.pm
 inc/Module/Install/Can.pm
 inc/Module/Install/Fetch.pm
 inc/Module/Install/Include.pm
 inc/Module/Install/Makefile.pm
+inc/Module/Install/ManifestSkip.pm
 inc/Module/Install/Metadata.pm
+inc/Module/Install/ReadmeFromPod.pm
 inc/Module/Install/TestBase.pm
+inc/Module/Install/VersionCheck.pm
 inc/Module/Install/Win32.pm
 inc/Module/Install/WriteAll.pm
 inc/Spiffy.pm
@@ -24,7 +28,6 @@ LibYAML/emitter.c
 LibYAML/lib/YAML/XS/LibYAML.pm
 LibYAML/LibYAML.xs
 LibYAML/loader.c
-LibYAML/Makefile
 LibYAML/Makefile.PL
 LibYAML/parser.c
 LibYAML/perl_libyaml.c
@@ -43,6 +46,7 @@ META.yml
 README
 t/alias.t
 t/api.t
+t/ascii.t
 t/blessed.t
 t/boolean.t
 t/bug-pvf.t
@@ -57,6 +61,8 @@ t/file.t
 t/glob.t
 t/leak.t
 t/load.t
+t/magic.t
+t/native.t
 t/null.t
 t/numbers.t
 t/pl_sv_undef.t
@@ -68,5 +74,6 @@ t/string_nulls.t
 t/tags.t
 t/TestYAML.pm
 t/TestYAMLTests.pm
+t/tied.t
 t/utf8.t
 t/yaml_tests.yaml

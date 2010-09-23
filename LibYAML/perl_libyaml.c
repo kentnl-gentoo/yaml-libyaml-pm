@@ -121,14 +121,17 @@ Load(SV *yaml_sv)
     dXSARGS;
     perl_yaml_loader_t loader;
     SV *node;
-    char *yaml_str;
+    const unsigned char *yaml_str;
     STRLEN yaml_len;
-    
-    /* If UTF8, make copy and downgrade */
-    if (SvPV_nolen(yaml_sv) && SvUTF8(yaml_sv)) {
+
+    yaml_str = (const unsigned char *)SvPV_const(yaml_sv, yaml_len);
+
+    if (DO_UTF8(yaml_sv)) {
         yaml_sv = sv_mortalcopy(yaml_sv);
+        if (!sv_utf8_downgrade(yaml_sv, TRUE))
+            croak("Wide character in YAML::XS::Load()");
+        yaml_str = (const unsigned char *)SvPV_const(yaml_sv, yaml_len);
     }
-    yaml_str = SvPVbyte(yaml_sv, yaml_len);
 
     sp = mark;
     if (0 && (items || ax)) {} /* XXX Quiet the -Wall warnings for now. */
@@ -137,7 +140,7 @@ Load(SV *yaml_sv)
     loader.document = 0;
     yaml_parser_set_input_string(
         &loader.parser,
-        (unsigned char *)yaml_str,
+        yaml_str,
         yaml_len
     );
 
@@ -151,7 +154,7 @@ Load(SV *yaml_sv)
          );
 
     loader.anchors = newHV();
-    sv_2mortal(loader.anchors);
+    sv_2mortal((SV *)loader.anchors);
 
     /* Keep calling load_node until end of stream */
     while (1) {
@@ -350,6 +353,8 @@ load_scalar(perl_yaml_loader_t *loader)
             return newSV(0);
         else if (strEQ(string, ""))
             return newSV(0);
+        else if (strEQ(string, "null"))
+            return newSV(0);
         else if (strEQ(string, "true"))
             return &PL_sv_yes;
         else if (strEQ(string, "false"))
@@ -363,7 +368,7 @@ load_scalar(perl_yaml_loader_t *loader)
         SvIV_please(scalar);
     }
 
-    SvUTF8_on(scalar);
+    (void)sv_utf8_decode(scalar);
     if (anchor)
         hv_store(loader->anchors, anchor, strlen(anchor), SvREFCNT_inc(scalar), 0);
     return scalar;
@@ -461,6 +466,11 @@ set_dumper_options(perl_yaml_dumper_t *dumper)
         SvTRUE(GvSV(gv)))
     ||
         ((gv = gv_fetchpv("YAML::XS::DumpCode", TRUE, SVt_PV)) &&
+        SvTRUE(GvSV(gv)))
+    );
+
+    dumper->quote_number_strings = (
+        ((gv = gv_fetchpv("YAML::XS::QuoteNumericStrings", TRUE, SVt_PV)) &&
         SvTRUE(GvSV(gv)))
     );
 }
@@ -574,10 +584,9 @@ dump_prewalk(perl_yaml_dumper_t *dumper, SV *node)
     }
     else if (ref_type == SVt_PVHV) {
         HV *hash = (HV *)SvRV(node);
-        len = HvKEYS(hash);
+        HE *he;
         hv_iterinit(hash);
-        for (i = 0; i < len; i++) {
-            HE *he = hv_iternext(hash);
+        while ((he = hv_iternext(hash))) {
             SV *val = HeVAL(he);
             if (val)
                 dump_prewalk(dumper, val);
@@ -608,7 +617,7 @@ dump_node(perl_yaml_dumper_t *dumper, SV *node)
 {
     yaml_char_t *anchor = NULL;
     yaml_char_t *tag = NULL;
-    char *class = NULL;
+    const char *class = NULL;
 
     if (SvTYPE(node) == SVt_PVGV) {
         SV **svr;
@@ -653,13 +662,13 @@ dump_node(perl_yaml_dumper_t *dumper, SV *node)
             dump_scalar(dumper, node, tag);
         }
 #if PERL_REVISION > 5 || (PERL_REVISION == 5 && PERL_VERSION >= 11)
-	else if (ref_type == SVt_REGEXP) {
-	    yaml_char_t *tag = (yaml_char_t *)form(TAG_PERL_PREFIX "regexp");
-	    class = sv_reftype(rnode, TRUE);
-            if (!strEQ(class, "Regexp"))
-                 tag = (yaml_char_t *)form("%s:%s", tag, class);
-	    dump_scalar(dumper, node, tag);
-	}
+        else if (ref_type == SVt_REGEXP) {
+            yaml_char_t *tag = (yaml_char_t *)form(TAG_PERL_PREFIX "regexp");
+            class = sv_reftype(rnode, TRUE);
+                if (!strEQ(class, "Regexp"))
+                     tag = (yaml_char_t *)form("%s:%s", tag, class);
+            dump_scalar(dumper, node, tag);
+        }
 #endif
         else {
             printf(
@@ -701,8 +710,8 @@ yaml_char_t *
 get_yaml_tag(SV *node)
 {
     yaml_char_t *tag;
-    char *class;
-    char *kind = "";
+    const char *class;
+    const char *kind = "";
     if (! (
         sv_isobject(node) ||
         (SvRV(node) && ( SvTYPE(SvRV(node)) == SVt_PVCV))
@@ -734,8 +743,7 @@ dump_hash(
     int len;
     AV *av;
     HV *hash = (HV *)SvRV(node);
-    len = HvKEYS(hash);
-    hv_iterinit(hash);
+    HE *he;
 
     if (!anchor)
         anchor = get_yaml_anchor(dumper, (SV *)hash);
@@ -750,16 +758,18 @@ dump_hash(
     yaml_emitter_emit(&dumper->emitter, &event_mapping_start);
 
     av = newAV();
-    for (i = 0; i < len; i++) {
-        HE *he = hv_iternext(hash);
+    len = 0;
+    hv_iterinit(hash);
+    while ((he = hv_iternext(hash))) {
         SV *key = hv_iterkeysv(he);
         av_store(av, AvFILLp(av)+1, key); /* av_push(), really */
+        len++;
     }
     STORE_HASH_SORT;
     for (i = 0; i < len; i++) {
         SV *key = av_shift(av);
         HE *he  = hv_fetch_ent(hash, key, 0, 0);
-        SV *val = HeVAL(he);
+        SV *val = he ? HeVAL(he) : NULL;
         if (val == NULL) { val = &PL_sv_undef; }
         dump_node(dumper, key);
         dump_node(dumper, val);
@@ -818,6 +828,7 @@ dump_scalar(perl_yaml_dumper_t *dumper, SV *node, yaml_char_t *tag)
         plain_implicit = quoted_implicit = 1;
     }
 
+    SvGETMAGIC(node);
     if (!SvOK(node)) {
         string = "~";
         string_len = 1;
@@ -834,7 +845,7 @@ dump_scalar(perl_yaml_dumper_t *dumper, SV *node, yaml_char_t *tag)
         style = YAML_PLAIN_SCALAR_STYLE;
     }
     else {
-        string = SvPV(node, string_len);
+        string = SvPV_nomg(node, string_len);
         if (
             (string_len == 0) ||
             strEQ(string, "~") ||
@@ -842,7 +853,7 @@ dump_scalar(perl_yaml_dumper_t *dumper, SV *node, yaml_char_t *tag)
             strEQ(string, "false") ||
             strEQ(string, "null") ||
             (SvTYPE(node) >= SVt_PVGV) ||
-            ( !SvNIOK(node) && looks_like_number(node) )
+            ( dumper->quote_number_strings && !SvNIOK(node) && looks_like_number(node) )
         ) {
             style = YAML_SINGLE_QUOTED_SCALAR_STYLE;
         }
@@ -958,7 +969,7 @@ dump_ref(perl_yaml_dumper_t *dumper, SV *node)
 }
 
 int
-append_output(void *yaml, unsigned char *buffer, unsigned int size)
+append_output(void *yaml, unsigned char *buffer, size_t size)
 {
     sv_catpvn((SV *)yaml, (const char *)buffer, (STRLEN)size);
     return 1;
