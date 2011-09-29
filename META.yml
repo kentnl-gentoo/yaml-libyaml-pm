@@ -1,5 +1,5 @@
 ---
-abstract: 'Perl YAML Serialization using XS and libyaml'
+abstract: ~
 author:
   - 'Ingy döt Net <ingy@cpan.org>'
 build_requires:
@@ -12,8 +12,7 @@ license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
   version: 1.4
-module_name: YAML::XS
-name: YAML-XS
+name: YAML-LibYAML
 no_index:
   directory:
     - inc
@@ -25,4 +24,4 @@ resources:
   homepage: http://github.com/ingydotnet/yaml-libyaml-pm/tree
   license: http://dev.perl.org/licenses/
   repository: git://github.com/ingydotnet/yaml-libyaml-pm.git
-version: 0.36
+version: 0.37
