@@ -63,6 +63,7 @@ t/glob.t
 t/leak.t
 t/load.t
 t/loadfile-empty.t
+t/long_plain_wrap.t
 t/magic.t
 t/native.t
 t/null.t
