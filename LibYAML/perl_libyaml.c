@@ -188,7 +188,7 @@ Load(SV *yaml_sv)
     return;
 
 load_error:
-    croak(loader_error_msg(&loader, NULL));
+    croak("%s", loader_error_msg(&loader, NULL));
 }
 
 /*
@@ -271,7 +271,7 @@ load_node(perl_yaml_loader_t *loader)
     return return_sv;
 
     load_error:
-        croak(loader_error_msg(loader, NULL));
+        croak("%s", loader_error_msg(loader, NULL));
 }
 
 /*
@@ -313,7 +313,7 @@ load_mapping(perl_yaml_loader_t *loader, char *tag)
         }
         else if (strlen(tag) <= strlen(prefix) ||
             ! strnEQ(tag, prefix, strlen(prefix))
-        ) croak(
+        ) croak("%s",
             loader_error_msg(loader, form("bad tag found for hash: '%s'", tag))
         );
         class = tag + strlen(prefix);
@@ -346,7 +346,7 @@ load_sequence(perl_yaml_loader_t *loader)
             prefix = "!";
         else if (strlen(tag) <= strlen(prefix) ||
             ! strnEQ(tag, prefix, strlen(prefix))
-        ) croak(
+        ) croak("%s",
             loader_error_msg(loader, form("bad tag found for array: '%s'", tag))
         );
         class = tag + strlen(prefix);
