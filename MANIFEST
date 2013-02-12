@@ -28,6 +28,8 @@ LibYAML/LibYAML.xs
 LibYAML/loader.c
 LibYAML/Makefile
 LibYAML/Makefile.PL
+LibYAML/MYMETA.json
+LibYAML/MYMETA.yml
 LibYAML/parser.c
 LibYAML/perl_libyaml.c
 LibYAML/perl_libyaml.h
@@ -36,6 +38,7 @@ LibYAML/ppport_sort.h
 LibYAML/reader.c
 LibYAML/scanner.c
 LibYAML/test.pl
+LibYAML/update.sh
 LibYAML/writer.c
 LibYAML/yaml.h
 LibYAML/yaml_private.h
