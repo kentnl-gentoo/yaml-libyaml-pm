@@ -28,4 +28,4 @@ resources:
     type: git
     url: git://github.com/ingydotnet/yaml-libyaml-pm.git
     web: https://github.com/ingydotnet/yaml-libyaml-pm/tree
-version: 0.40
+version: 0.41
