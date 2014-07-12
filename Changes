@@ -1,3 +1,6 @@
+0.43 Sat Jul 12 10:04:07 PDT 2014
+ - Test::Base tests needed 'inc' in @INC
+
 0.42 Fri Jul 11 14:45:58 PDT 2014
  - Switch to Zilla::Dist
  - No longer dep on Test::Base, Spiffy, and Filter::Util::Call
