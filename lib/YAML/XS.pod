@@ -32,8 +32,6 @@ corresponding functions.
 
 =head1 CONFIGURATION
 
-=over 4
-
 =over
 
 =item C<$YAML::XS::UseCode>
