@@ -10,7 +10,7 @@ See http://github.com/ingydotnet/swim-pm#readme
 
 YAML::LibYAML - Perl YAML Serialization using XS and libyaml
 
-=head1 NOTICE
+=head1 NOTE
 
 C<YAML-LibYAML> is the CPAN I<distribution> name for the C<YAML::XS> module.
 
