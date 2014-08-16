@@ -34,7 +34,6 @@ lib/YAML/LibYAML.pm
 lib/YAML/LibYAML.pod
 lib/YAML/XS.pm
 lib/YAML/XS.pod
-t/000-require-modules.t
 t/TestYAML.pm
 t/TestYAMLTests.pm
 t/alias.t
