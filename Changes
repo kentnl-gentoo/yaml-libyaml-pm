@@ -1,3 +1,6 @@
+0.52 Fri Aug 22 21:03:19 PDT 2014
+ - Fix e1 test failure on 5.21.4
+
 0.51 Sat Aug 16 14:28:45 PDT 2014
  - Remove =travis section
 
