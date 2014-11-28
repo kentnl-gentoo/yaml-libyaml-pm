@@ -1,3 +1,8 @@
+0.53 Fri Nov 28 09:20:08 PST 2014
+ - Fix for
+   https://bitbucket.org/xi/libyaml/issue/10/wrapped-strings-cause-assert-f
+   ailure
+
 0.52 Fri Aug 22 21:03:19 PDT 2014
  - Fix e1 test failure on 5.21.4
 
