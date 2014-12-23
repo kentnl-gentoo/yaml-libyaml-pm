@@ -3,6 +3,9 @@ CONTRIBUTING
 Changes
 LICENSE
 LibYAML/LibYAML.xs
+LibYAML/MYMETA.json
+LibYAML/MYMETA.yml
+LibYAML/Makefile
 LibYAML/Makefile.PL
 LibYAML/api.c
 LibYAML/config.h

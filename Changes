@@ -1,3 +1,6 @@
+0.55 Mon Dec 22 17:26:27 PST 2014
+ - Get YAML::XS using latest libyaml
+
 0.54 Sat Nov 29 11:47:10 PST 2014
  - Reverted an old patch with 0.53. Unreverted.
 
