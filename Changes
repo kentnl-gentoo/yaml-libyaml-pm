@@ -1,3 +1,6 @@
+0.57 Thu Jan 15 23:05:15 EST 2015
+ - Applied fix for PR/21. nawglan++
+
 0.56 Thu Jan 15 22:21:47 EST 2015
  - Update copyright year
  - Use Swim cpan-tail block functions in doc
