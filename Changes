@@ -1,3 +1,8 @@
+0.59 Mon Jan 26 15:04:10 PST 2015
+ - PR/23 Better scalar dump heuristics
+ - More closely match YAML.pm
+ - Thanks Matthias Bethke
+
 0.58 Tue Jan 20 21:01:49 PST 2015
  - Add a VERSION statement to YAML::LibYAML (issue#8)
 

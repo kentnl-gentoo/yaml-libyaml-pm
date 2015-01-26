@@ -46,6 +46,7 @@ t/bug-pvf.t
 t/bug-stack.t
 t/code.t
 t/data/basic.yml
+t/dump-heuristics.t
 t/dump.t
 t/empty.t
 t/empty.yaml
