@@ -1,3 +1,6 @@
+0.60 Tue Feb  9 14:36:09 EST 2016
+ - Apply PR
+
 0.59 Mon Jan 26 15:04:10 PST 2015
  - PR/23 Better scalar dump heuristics
  - More closely match YAML.pm
@@ -21,8 +24,7 @@
 
 0.53 Fri Nov 28 09:20:08 PST 2014
  - Fix for
-   https://bitbucket.org/xi/libyaml/issue/10/wrapped-strings-cause-assert-f
-   ailure
+   https://bitbucket.org/xi/libyaml/issue/10/wrapped-strings-cause-assert-failure
 
 0.52 Fri Aug 22 21:03:19 PDT 2014
  - Fix e1 test failure on 5.21.4
@@ -227,4 +229,3 @@
 
 0.01 Fri May 11 14:08:54 PDT 2007
  - First Version. Very alpha. Not for production!
-
