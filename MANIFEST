@@ -54,6 +54,7 @@ t/empty.yaml
 t/error.t
 t/file.t
 t/glob.t
+t/io-handle.t
 t/leak.t
 t/load.t
 t/loadfile-empty.t

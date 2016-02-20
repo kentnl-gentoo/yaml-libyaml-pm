@@ -1,7 +1,7 @@
 use strict; use warnings;
 
 package YAML::XS;
-our $VERSION = '0.60';
+our $VERSION = '0.61';
 
 use base 'Exporter';
 
@@ -21,7 +21,7 @@ use YAML::XS::LibYAML qw(Load Dump);
 sub DumpFile {
     my $OUT;
     my $filename = shift;
-    if (ref $filename eq 'GLOB') {
+    if (defined fileno($filename)) {
         $OUT = $filename;
     }
     else {
@@ -39,7 +39,7 @@ sub DumpFile {
 sub LoadFile {
     my $IN;
     my $filename = shift;
-    if (ref $filename eq 'GLOB') {
+    if (defined fileno($filename)) {
         $IN = $filename;
     }
     else {

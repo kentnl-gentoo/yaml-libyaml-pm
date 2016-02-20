@@ -1,5 +1,8 @@
+0.61 Sat Feb 20 18:04:19 UTC 2016
+ - Apply PR/37 @perlpunk++ (includes PR/36 @lameventanas++)
+
 0.60 Tue Feb  9 14:36:09 EST 2016
- - Apply PR
+ - Apply PR/33. @andygrundman++. Solaris fixes.
 
 0.59 Mon Jan 26 15:04:10 PST 2015
  - PR/23 Better scalar dump heuristics
