@@ -63,6 +63,7 @@ t/magic.t
 t/native.t
 t/null.t
 t/numbers.t
+t/path-class.t
 t/pl_sv_undef.t
 t/private.t
 t/quote.t
