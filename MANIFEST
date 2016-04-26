@@ -40,7 +40,6 @@ t/TestYAMLTests.pm
 t/alias.t
 t/api.t
 t/ascii.t
-t/author-pod-syntax.t
 t/blessed.t
 t/boolean.t
 t/bug-pvf.t
