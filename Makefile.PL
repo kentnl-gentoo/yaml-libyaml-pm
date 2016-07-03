@@ -17,7 +17,7 @@ my %WriteMakefileArgs = (
   "MIN_PERL_VERSION" => "5.008001",
   "NAME" => "YAML::LibYAML",
   "PREREQ_PM" => {},
-  "VERSION" => "0.62_001",
+  "VERSION" => "0.62_002",
   "test" => {
     "TESTS" => "t/*.t"
   }
