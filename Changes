@@ -1,4 +1,4 @@
-0.62_002 Sun Jul  3 10:39:00 PDT 2016
+0.63 Fri Jul  8 14:40:35 UTC 2016
  - Apply PR/48 by @perlpunk++
  - Fixes memory leaks
 
