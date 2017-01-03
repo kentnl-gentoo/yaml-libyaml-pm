@@ -1,3 +1,9 @@
+0.63_001 Tue Jan  3 05:09:14 CET 2017
+ - Use the latest libyaml sources.
+ - Lazy load B::Deparse for faster startup time. Applied PR/53 by
+   @perlpunk++ (submitted by @carnil++ from a Debian issue as GitHub
+   issue/52)
+
 0.63 Fri Jul  8 14:40:35 UTC 2016
  - Apply PR/48 by @perlpunk++
  - Fixes memory leaks
