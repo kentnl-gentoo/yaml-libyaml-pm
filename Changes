@@ -1,12 +1,10 @@
-0.63_002 Mon  3 Apr 20:55:51 CEST 2017
+0.64 Fri  7 Apr 20:32:01 CEST 2017
  - use lib FindBin::Bin in tests, preparing for perl 5.26 where '.' gets
-   removed from @INC. Fixes issue
-
-0.63_001 Tue Jan  3 05:09:14 CET 2017
+   removed from @INC. Fixes issue#54 TINITA++
  - Use the latest libyaml sources.
  - Lazy load B::Deparse for faster startup time. Applied PR/53 by
    @perlpunk++ (submitted by @carnil++ from a Debian issue as GitHub
-   issue/52)
+   issue#52)
 
 0.63 Fri Jul  8 14:40:35 UTC 2016
  - Apply PR/48 by @perlpunk++
