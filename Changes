@@ -1,3 +1,7 @@
+0.66_001 Fri Nov 10 22:06:20 CET 2017
+ - Apply PR#66 (TINITA++)
+ - Support JSON::PP::Boolean and boolean.pm via $YAML::XS::Boolean
+
 0.66 Thu Aug 17 20:06:06 CEST 2017
  - Apply PR#55 (@vti++)
  - Dump() was modifying original data, adding a PV to numbers
