@@ -1,3 +1,7 @@
+0.66_002 Tue Nov 14 21:02:41 CET 2017
+ - Apply PR#67 (TINITA++)
+ - Support standard tags !!str, !!map and !!seq instead of dying
+
 0.66_001 Fri Nov 10 22:06:20 CET 2017
  - Apply PR#66 (TINITA++)
  - Support JSON::PP::Boolean and boolean.pm via $YAML::XS::Boolean

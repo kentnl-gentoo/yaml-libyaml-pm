@@ -61,6 +61,7 @@ t/glob.t
 t/io-handle.t
 t/leak.t
 t/load.t
+t/load_standard_tags.t
 t/loadfile-empty.t
 t/long_plain_wrap.t
 t/magic.t
