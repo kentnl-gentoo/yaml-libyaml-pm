@@ -1,3 +1,7 @@
+0.68_001 Wed Dec 20 19:37:38 CET 2017
+ - Security fix Add $LoadBlessed option to turn on/off loading objects
+   PR#73 TINITA++
+
 0.68 Mon Dec 18 20:01:05 CET 2017
  - Fix regex roundtrip (fixes issue#69) PR#70 (TINITA++)
  - Fix loading of many regexes (fixes issue#64) PR#71 (TINITA++)
